@@ -1,0 +1,16 @@
+/**
+ * Project hnct.lib.utility
+ * @author ryan
+ */
+version = "1.0.0"
+group = "hnct.lib"
+
+ext.scalaVersion = "2.11.1"
+
+dependencies {
+		
+	// slf4j
+	compile 'org.slf4j:slf4j-api:1.7.6'
+	runtime 'ch.qos.logback:logback-core:1.0.7'
+
+}
