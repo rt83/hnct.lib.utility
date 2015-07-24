@@ -4,3 +4,4 @@
 .cache
 .classpath
 .settings
+-cache-main
