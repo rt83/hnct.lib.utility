@@ -20,11 +20,11 @@ object StringUtil {
     for (j <- 0 to lenStr2) d(0)(j) = j
 
     for (i <- 1 to lenStr1; j <- 1 to lenStr2) {
-      val cost = if (str1(i - 1) == str2(j-1)) 0 else 1
+      val cost = if (str1(i-1) == str2(j-1)) 0 else 1
 
       d(i)(j) = min(
-        d(i-1)(j  ) + 1,     // deletion
-        d(i  )(j-1) + 1,     // insertion
+        d(i-1)(j) + 1,     // deletion
+        d(i)(j-1) + 1,     // insertion
         d(i-1)(j-1) + cost   // substitution
       )
     }
@@ -35,9 +35,9 @@ object StringUtil {
   /**
    * Generate combinations of words of a string
    */
-  def generateCombinations(s: String, seperator: String = " "): Seq[String] = {
-    val wordSet = s.split(seperator).toSet
-    wordSet.subsets().map(_.mkString(seperator)).toIndexedSeq
+  def wordCombiOf(s: String, seperator: String = " "): Seq[String] = {
+    val wordSet = s.split(seperator).map(_.trim).toSet
+    wordSet.subsets.filter(!_.isEmpty).map(_.mkString(seperator)).toSeq
   }
   
 }
