@@ -36,8 +36,28 @@ object StringUtil {
    * Generate combinations of words of a string
    */
   def wordCombiOf(s: String, seperator: String = " "): Seq[String] = {
-    val wordSet = s.split(seperator).map(_.trim).toSet
+    val wordSet = s.split(seperator).map(_.trim).filter(!_.isEmpty()).toSet
     wordSet.subsets.filter(!_.isEmpty).map(_.mkString(seperator)).toSeq
   }
+  
+  /**
+   * Strip unwanted characters out of the given string
+   */
+  def stripAll(s: String, unwanteds: String): String = {
+    @scala.annotation.tailrec def start(n: Int): String = 
+        if (n == s.length) ""
+        else if (unwanteds.indexOf(s.charAt(n)) < 0) end(n, s.length)
+        else start(1 + n)
+
+    @scala.annotation.tailrec def end(a: Int, n: Int): String =
+        if (n <= a) s.substring(a, n)
+        else if (unwanteds.indexOf(s.charAt(n - 1)) < 0) s.substring(a, n)
+        else end(a, n - 1)
+
+   	start(0)
+	}
+  
+  def trimAll(s: String, unwanteds: String): String =
+  	s.toList.filter { x => !unwanteds.contains(x) }.mkString
   
 }
