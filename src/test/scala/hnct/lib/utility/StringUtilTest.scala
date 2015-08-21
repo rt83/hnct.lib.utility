@@ -10,4 +10,7 @@ object StringUtilTest extends App {
 //  StringUtil.wordCombiOf("nem nuong hanoi") foreach { x =>
 //		println("Distance between '"+search+"' and '"+x+"' = "+StringUtil.levenshtein(search, x))
 //	}
+  
+  val permus = StringUtil.wordCombiOf("a b c d e")
+  permus foreach (println)
 }

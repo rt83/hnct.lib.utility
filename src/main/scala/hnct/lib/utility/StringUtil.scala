@@ -35,9 +35,24 @@ object StringUtil {
   /**
    * Generate combinations of words of a string
    */
+//  def wordCombiOf(s: String, separator: String = " "): Seq[String] = {
+//    val words = s.trim.split(" ").map(_.trim).toList
+//    var result = words.toVector
+//    
+//    def combi(prefix: String, ts: List[String]): Unit = ts match {
+//      case Nil => ()
+//      case h::tail =>
+//        for (x <- ts) 
+//          result = result :+ (prefix + separator + x) 
+//        combi(prefix + separator + h, tail)
+//    }
+//    combi(words.head, words.tail)
+//    
+//    result
+//  }
   def wordCombiOf(s: String, seperator: String = " "): Seq[String] = {
     val wordSet = s.split(seperator).map(_.trim).filter(!_.isEmpty()).toSet
-    wordSet.subsets.filter(!_.isEmpty).map(_.mkString(seperator)).toSeq
+    wordSet.subsets(3).filter(!_.isEmpty).map(_.mkString(seperator)).toSeq
   }
   
   /**
