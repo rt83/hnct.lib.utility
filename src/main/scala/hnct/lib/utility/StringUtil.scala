@@ -50,9 +50,15 @@ object StringUtil {
 //    
 //    result
 //  }
+  
   def wordCombiOf(s: String, seperator: String = " "): Seq[String] = {
     val wordSet = s.split(seperator).map(_.trim).filter(!_.isEmpty()).toSet
-    wordSet.subsets(3).filter(!_.isEmpty).map(_.mkString(seperator)).toSeq
+    wordSet.subsets.filter(!_.isEmpty).map(_.mkString(seperator)).toSeq
+  }
+  
+  def wordCombiOf(s: String, len: Int, seperator: String): Seq[String] = {
+    val wordSet = s.split(seperator).map(_.trim).filter(!_.isEmpty()).toSet
+    wordSet.subsets(len).filter(!_.isEmpty).map(_.mkString(seperator)).toSeq
   }
   
   /**
