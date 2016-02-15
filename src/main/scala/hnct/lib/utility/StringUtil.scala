@@ -32,25 +32,6 @@ object StringUtil {
     d(lenStr1)(lenStr2)
   }
   
-  /**
-   * Generate combinations of words of a string
-   */
-//  def wordCombiOf(s: String, separator: String = " "): Seq[String] = {
-//    val words = s.trim.split(" ").map(_.trim).toList
-//    var result = words.toVector
-//    
-//    def combi(prefix: String, ts: List[String]): Unit = ts match {
-//      case Nil => ()
-//      case h::tail =>
-//        for (x <- ts) 
-//          result = result :+ (prefix + separator + x) 
-//        combi(prefix + separator + h, tail)
-//    }
-//    combi(words.head, words.tail)
-//    
-//    result
-//  }
-  
   def wordCombiOf(s: String, seperator: String = " "): Seq[String] = {
     val wordSet = s.split(seperator).map(_.trim).filter(!_.isEmpty()).toSet
     wordSet.subsets.filter(!_.isEmpty).map(_.mkString(seperator)).toSeq
@@ -59,6 +40,33 @@ object StringUtil {
   def wordCombiOf(s: String, len: Int, seperator: String): Seq[String] = {
     val wordSet = s.split(seperator).map(_.trim).filter(!_.isEmpty()).toSet
     wordSet.subsets(len).filter(!_.isEmpty).map(_.mkString(seperator)).toSeq
+  }
+  
+  def wordPermuOf(phrase: String, separator: String,  len: Int = 0) = {
+    def generate(base: String, rest: List[String], result: Vector[String]): Vector[String] = rest match {
+      case Nil =>
+        result
+      case head::tail =>
+        val partial = rest.foldLeft(Vector[String]()){(acc, word) => acc :+ (base + separator + word)}
+        generate(base + separator + head, tail, result ++ partial)
+    }
+    
+    def accumulate(words: List[String], acc: Vector[String]): Vector[String] = {
+      words match {
+        case Nil => acc
+        case head::tail =>
+          val permus = generate(head, tail, Vector[String]())
+          val partial = acc ++ permus
+          val partialFiltered = if (len > 0)
+            partial.filter(_.split(separator).length == len)
+          else
+            partial
+          accumulate(tail, partialFiltered)
+      }
+    }
+    
+    val words = phrase.split(separator).toList
+    accumulate(words, words.toVector)
   }
   
   /**
@@ -80,5 +88,25 @@ object StringUtil {
   
   def trimAll(s: String, unwanteds: String): String =
   	s.toList.filter { x => !unwanteds.contains(x) }.mkString
+  	
+  /**
+   * Given a word W1 and a phrase, phrase fuzzy-contains W1 
+   * if exists a word W2 in the phrase such that levenshtein(W1, W2) <= lvsh.
+   */
+  def fuzzyContains(word: String, phrase: String, lvsh: Int = 1): Boolean = {
+    val len = word.trim.split(" ").size
+    val pLen = phrase.trim.split(" ").size
+    if (len > pLen) false
+    else {
+      val _word = word.toLowerCase
+      val permus = wordPermuOf(phrase.toLowerCase, " ", len)
+      permus.filter{permu =>
+        levenshtein(_word, permu) <= lvsh
+      }.headOption match {
+        case None => false
+        case Some(w) => true
+      }
+    }
+  }
   
 }

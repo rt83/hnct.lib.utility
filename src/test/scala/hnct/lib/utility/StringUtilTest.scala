@@ -11,6 +11,10 @@ object StringUtilTest extends App {
 //		println("Distance between '"+search+"' and '"+x+"' = "+StringUtil.levenshtein(search, x))
 //	}
   
-  val permus = StringUtil.wordCombiOf("cha ca").toVector
-  println("combis: "+permus)
+//  val permus = StringUtil.wordCombiOf("thit bo suon xao chua ngot theo phong cach ha noi").toVector
+//  println("combis: "+permus)
+  
+//  StringUtil.wordPermuOf("la vong Cha ca ha noi", " ", 2).foreach(println)
+  
+  println(StringUtil.fuzzyContains("la vong Cha ca ha noi", "com"))
 }
