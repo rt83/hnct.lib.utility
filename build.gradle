@@ -7,7 +7,7 @@ group = "hnct"
 
 apply plugin: 'eclipse'
 
-ext.scalaVersion = "2.11.8"
+ext.scalaVersion = "2.12.4"
 
 dependencies {
 
