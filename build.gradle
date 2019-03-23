@@ -12,7 +12,7 @@ group = "hnct"
 
 hnct {
     lang {
-        scala version:"2.12.4"
+        scala version:"2.12.8"
     }
 }
 
